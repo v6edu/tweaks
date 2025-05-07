@@ -325,6 +325,24 @@
     requestAnimationFrame(updateFPS);
 
     window.onload = updateTitlePosition;
+
+    function updateIframeLinks() {
+  try {
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    const links = iframeDoc.querySelectorAll('a');
+    links.forEach(link => {
+      link.setAttribute('target', '_blank');
+    });
+  } catch (e) {
+    console.warn("Could not access iframe content due to CORS restrictions.");
+  }
+}
+
+// Call this when iframe finishes loading
+iframe.addEventListener('load', () => {
+  updateIframeLinks(); // attempt to update links
+});
+
   </script>
 </body>
 </html>
